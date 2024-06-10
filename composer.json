@@ -13,11 +13,12 @@
         "php": ">=7.4"
     },
     "suggest": {
-        "yoast/phpunit-polyfills": "Set of polyfills for changed PHPUnit functionality to allow for creating PHPUnit cross-version compatible tests.\n\n"
+        "yoast/phpunit-polyfills": "Set of polyfills for changed PHPUnit functionality to allow for creating PHPUnit cross-version compatible tests."
     },
     "minimum-stability": "dev",
     "scripts": {
         "post-install-cmd": [
+            "@mk:targets",
             "@clone",
             "@copy:data",
             "@copy:includes",
@@ -25,16 +26,18 @@
             "@copy:config.php"
         ],
         "post-update-cmd" : [
+            "@mk:targets",
             "@clone",
             "@copy:data",
             "@copy:includes",
             "@copy:multisite.xml",
-            "@copy:config.php",
+            "@copy:config.php"
         ],
         "clone": "git clone git://develop.git.wordpress.org/ source",
+        "mk:targets": "rm -rf source && mkdir data includes",
         "copy:data": "cp -r source/tests/phpunit/data/* data",
         "copy:includes": "cp -r source/tests/phpunit/includes/* includes",
         "copy:multisite.xml": "cp -r source/tests/phpunit/multisite.xml multisite.xml",
-        "copy:config.php": "cp -r source/wp-tests-config-sample.php wp-tests-config-sample.php",
+        "copy:config.php": "cp -r source/wp-tests-config-sample.php wp-tests-config-sample.php"
     }
 }
