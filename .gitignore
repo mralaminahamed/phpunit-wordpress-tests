@@ -1,5 +1,5 @@
 /.idea
-/source/*
+/source/
 /vendor/
 /composer.lock
 /report.txt
