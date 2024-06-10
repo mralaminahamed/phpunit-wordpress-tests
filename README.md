@@ -4,13 +4,13 @@ The short version:
 
 2. Copy wp-tests-config-sample.php to wp-tests-config.php, edit it and include your database name/user/password.
 
-3. $ svn up
+3. ```$ svn up```
 
 4. Run the tests from the "trunk" directory:
-   To execute a particular test:
-      $ phpunit tests/phpunit/tests/test_case.php
-   To execute all tests:
-      $ phpunit
+   * To execute a particular test:
+      ```$ phpunit tests/phpunit/tests/test_case.php```
+   * To execute all tests:
+      ```$ phpunit```
 
 Notes:
 
