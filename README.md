@@ -1,39 +1,23 @@
-# Freemius (WordPress SDK) Stubs
+The short version:
 
-[![Packagist stats](https://img.shields.io/packagist/dt/mralaminahamed/freemius-stubs.svg)](https://packagist.org/packages/mralaminahamed/freemius-stubs/stats)
-[![Packagist](https://img.shields.io/packagist/v/mralaminahamed/freemius-stubs.svg?color=4CC61E&style=popout)](https://packagist.org/packages/mralaminahamed/freemius-stubs)
-[![Tweet](https://img.shields.io/badge/Tweet-share-d5d5d5?style=social&logo=twitter)](https://twitter.com/intent/tweet?text=https%3A%2F%2Fgithub.com%2Fmralaminahamed%2Fphpstan-freemius-stubs&url=I%20use%20mralaminahamed%2Fphpstan-freemius-stubs%20for%20IDE%20completion%20and%20static%20analysis)
-[![Build Status](https://app.travis-ci.com/mralaminahamed/freemius-stubs.svg?branch=master)](https://app.travis-ci.com/mralaminahamed/freemius-stubs)
+1. Create a clean MySQL database and user. DO NOT USE AN EXISTING DATABASE or you will lose data, guaranteed.
 
-This package provides stub declarations for the [Freemius WordPress SDK plugin](https://github.com/freemius/wordpress-sdk)
-functions, classes and interfaces.
-These stubs can help plugin and theme developers leverage IDE completion
-and static analysis tools like [PHPStan](https://github.com/phpstan/phpstan).
+2. Copy wp-tests-config-sample.php to wp-tests-config.php, edit it and include your database name/user/password.
 
-The stubs are generated directly from the [source](https://github.com/freemius/wordpress-sdk)
-using [php-stubs/generator](https://github.com/php-stubs/generator).
+3. $ svn up
 
-## Requirements
+4. Run the tests from the "trunk" directory:
+   To execute a particular test:
+      $ phpunit tests/phpunit/tests/test_case.php
+   To execute all tests:
+      $ phpunit
 
-- PHP >=7.1
+Notes:
 
-## Installation
+Test cases live in the 'tests' subdirectory. All files in that directory will be included by default. Extend the WP_UnitTestCase class to ensure your test is run.
 
-Require this package as a development dependency with [Composer](https://getcomposer.org).
+phpunit will initialize and install a (more or less) complete running copy of WordPress each time it is run. This makes it possible to run functional interface and module tests against a fully working database and codebase, as opposed to pure unit tests with mock objects and stubs. Pure unit tests may be used also, of course.
 
-```bash
-composer require --dev mralaminahamed/freemius-stubs
-```
+Changes to the test database will be rolled back as tests are finished, to ensure a clean start next time the tests are run.
 
-Alternatively you may download `freemius-stubs.php` directly.
-
-## Usage in PHPStan
-
-Include stubs in PHPStan configuration file.
-
-```yaml
-parameters:
-    bootstrapFiles:
-        - vendor/mralaminahamed/freemius-stubs/freemius-constants-stubs.php
-        - vendor/mralaminahamed/freemius-stubs/freemius-stubs.php
-```
+phpunit is intended to run at the command line, not via a web server.
