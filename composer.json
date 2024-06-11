@@ -21,6 +21,7 @@
     "minimum-stability": "dev",
     "scripts": {
         "update-source": [
+            "@remove:source",
             "@mk:targets",
             "@clone",
             "@copy:data",
@@ -30,7 +31,8 @@
             "@copy:config.php"
         ],
         "clone": "git clone git://develop.git.wordpress.org/ source --quiet",
-        "mk:targets": "rm -rf source && mkdir data includes tests",
+        "remove:source": "[ -d \"source\" ] && rm -rf \"source\" || true",
+        "mk:targets": "mkdir -p data includes tests",
         "copy:data": "cp -r source/tests/phpunit/data/* data",
         "copy:includes": "cp -r source/tests/phpunit/includes/* includes",
         "copy:tests": "cp -r source/tests/phpunit/tests/* tests",
