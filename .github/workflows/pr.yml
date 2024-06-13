@@ -15,43 +15,56 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Create Pull Request
-        env:
-          GITHUB_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
+      - name: Set up Git user
         run: |
-          # Set up user information
-          git config --global user.email "34349365+mralaminahamed@users.noreply.github.com"
-          git config --global user.name "Al Amin (Bot)"
+          git config user.name 'github-actions'
+          git config user.email 'github-actions@github.com'
 
-          # Set up remote url
-          git remote set-url origin "https://${{ secrets.PERSONAL_TOKEN }}@github.com/mralaminahamed/phpunit-wordpress-tests.git"
+      - name: Create and switch to new branch
+        run: git checkout -b "update/sync-from-wordpress-develop-repo"
 
-          # Create a new branch
-          branch_name="update/sync-from-wordpress-develop-repo"
-          git checkout -b "$branch_name"
+      - name: Clone the WordPress Develop repository
+        run: git clone git://develop.git.wordpress.org/ source --quiet
 
-          # Clone the WordPress Develop repository
-          git clone git://develop.git.wordpress.org/ source --quiet
-
-          # Copy the necessary files to the root directory
+      - name: Copy the necessary files to the root directory
+        run: |
           cp -r source/tests/phpunit/data/* data
           cp -r source/tests/phpunit/includes/* includes
           cp -r source/tests/phpunit/multisite.xml multisite.xml
           cp -r source/tests/phpunit/wp-mail-real-test.php wp-mail-real-test.php
           cp -r source/wp-tests-config-sample.php wp-config-sample.php
 
-          # Remove the source directory
-          rm -rf "source"
+      - name: Remove the source directory
+        run: rm -rf "source"
 
-          # Add and commit the changes to the new branch
-          git add ./
+      - name: Commit the changes
+        run: |
+          git add .
           git commit -m "Update from WordPress Develop"
 
-          # Push the new branch to the remote repository
-          git push --set-upstream origin "$branch_name"
+      - name: Get the current branch name
+        id: branch_name
+        run: echo "::set-output name=branch_name::$(echo ${GITHUB_REF#refs/heads/})"
 
-          # Create a new pull request
-          gh pr create --base main --head "$branch_name" --title "Update from WordPress Develop" --body "This PR updates the codebase with the latest changes from the WordPress Develop repository"
+      - name: Push the changes to the remote repository
+        env:
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
+        run: git push origin ${{ steps.branch_name.outputs.branch_name }}
+
+      - name: Install GitHub CLI
+        run: |
+          sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-key C99B11DEB97541F0
+          sudo apt-add-repository https://cli.github.com/packages
+          sudo apt update
+          sudo apt install gh
+
+      - name: Authenticate with GitHub CLI
+        run: gh auth login --with-token <<< $GITHUB_TOKEN
+
+      - name: Create a pull request
+        env:
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
+        run: gh pr create --base main --head "$branch_name" --title "Update from WordPress Develop" --body "This PR updates the codebase with the latest changes from the WordPress Develop repository"
 
       - name: Check Output
         run: |
