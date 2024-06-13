@@ -1,9 +1,6 @@
 name: Update from WordPress Develop Repository
 
 on:
-  push:
-    branches:
-      - development # Adjust the branch name as needed
   schedule:
     - cron: '0 * * * *'
 
@@ -49,6 +46,7 @@ jobs:
           labels: |
             update
             automated pr
+          assignees: mralaminahamed
           draft: false
 
       - name: Check Output
