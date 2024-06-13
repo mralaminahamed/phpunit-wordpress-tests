@@ -10,27 +10,31 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0 # Required to get the complete commit history
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0 # Required to get the complete commit history
 
-      - name: Create Pull Request
-        env:
-          GITHUB_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
-        run: |
-          # Set up user information
-          git config --global user.email "34349365+mralaminahamed@users.noreply.github.com"
-          git config --global user.name "Al Amin (Bot)"
-          # Create a new branch
-          branch_name="feature/my-new-feature" # Replace with your desired branch name
-          git checkout -b "$branch_name"
-          # Make your desired changes to the code
-          # For example:
-          echo "New feature code" > new-feature.txt
-          git add new-feature.txt
-          git commit -m "Add new feature"
-          # Create a new pull request
-          gh pr create --title "New Feature" --body "This PR adds a new feature" --base main --head "$branch_name"
-      - name: Check Output
-        run: |
-          echo "Pull Request created successfully!"
+    - name: Create Pull Request
+      env:
+        PERSONAL_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
+      run: |
+        # Set up user information
+        git config --global user.email "34349365+mralaminahamed@users.noreply.github.com"
+        git config --global user.name "Al Amin (Bot)"
+
+        # Create a new branch
+        branch_name="feature/my-new-feature" # Replace with your desired branch name
+        git checkout -b "$branch_name"
+
+        # Make your desired changes to the code
+        # For example:
+        echo "New feature code" > new-feature.txt
+        git add new-feature.txt
+        git commit -m "Add new feature"
+
+        # Create a new pull request
+        gh pr create --title "New Feature" --body "This PR adds a new feature" --base main --head "$branch_name"
+
+    - name: Check Output
+      run: |
+        echo "Pull Request created successfully!"
