@@ -42,7 +42,7 @@
             "@clean:source-targets"
         ],
         "clone:wordpress-develop": "git clone git://develop.git.wordpress.org/ source --quiet",
-        "clean:source-targets": "( [ -d \"source\" ] && rm -rf \"source\" || true ) && mkdir -p data includes tests",
+        "clean:source-targets": "( [ -d \"source\" ] && rm -rf \"source\" || true ) && mkdir -p data includes",
         "copy:tests:data": "cp -r source/tests/phpunit/data/* data",
         "copy:tests:includes": "cp -r source/tests/phpunit/includes/* includes",
         "copy:tests:multisite.xml": "cp -r source/tests/phpunit/multisite.xml multisite.xml",
