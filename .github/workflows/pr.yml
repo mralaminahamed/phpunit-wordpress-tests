@@ -14,7 +14,7 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        
+
       - name: Clone the WordPress Develop repository
         run: git clone git://develop.git.wordpress.org/ source --quiet
 
@@ -49,7 +49,6 @@ jobs:
           labels: |
             update
             automated pr
-          reviewers: mralaminahamed
           draft: false
 
       - name: Check Output
