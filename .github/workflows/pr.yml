@@ -14,15 +14,7 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
-      - name: Set up Git user
-        run: |
-          git config user.name 'github-actions'
-          git config user.email 'github-actions@github.com'
-
-      - name: Create and switch to new branch
-        run: git checkout -b "update/sync-from-wordpress-develop-repo"
-
+        
       - name: Clone the WordPress Develop repository
         run: git clone git://develop.git.wordpress.org/ source --quiet
 
@@ -36,11 +28,6 @@ jobs:
 
       - name: Remove the source directory
         run: rm -rf "source"
-
-      - name: Commit the changes
-        run: |
-          git add .
-          git commit -m "Update from WordPress Develop"
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v6
