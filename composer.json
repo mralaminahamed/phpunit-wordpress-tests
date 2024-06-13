@@ -1,22 +1,31 @@
 {
     "name": "mralaminahamed/phpunit-wordpress-tests",
-    "description": "PHPUnit Tests Library from the Official WordPress Develop Repo",
+    "description": "The WordPress core PHPUnit Tests Library from the Official WordPress Develop Repo",
+    "type": "library",
     "keywords": [
-        "tests-lib",
         "wordpress",
         "tests",
         "phpunit"
     ],
     "license": "MIT",
-    "homepage": "https://github.com/mralaminahamed/mralaminahamed/phpunit-wordpress-tests",
+    "authors": [
+        {
+            "name": "Al Amin Ahamed",
+            "email": "me@alaminahamed.com"
+        },
+        {
+            "name": "WordPress Community",
+            "homepage": "https://wordpress.org/about/"
+        }
+    ],
+    "homepage": "https://github.com/mralaminahamed/phpunit-wordpress-tests",
     "support": {
-        "source": "https://github.com/mralaminahamed/mralaminahamed/phpunit-wordpress-tests",
-        "issues": "https://github.com/mralaminahamed/mralaminahamed/phpunit-wordpress-tests/issues"
+        "source": "https://github.com/mralaminahamed/phpunit-wordpress-tests",
+        "issues": "https://github.com/mralaminahamed/phpunit-wordpress-tests/issues"
     },
     "require": {
 		"ext-json": "*",
-		"php": ">=7.2.24",
-        "yoast/phpunit-polyfills": "^2.0@dev"
+		"php": ">=7.4"
 	},
     "scripts": {
         "update-source": [
@@ -28,7 +37,8 @@
             "@copy:tests:includes",
             "@copy:tests:multisite.xml",
             "@copy:tests:wp-mail-real-test.php",
-            "@copy:tests:config.php"
+            "@copy:tests:config.php",
+            "@clean:source-targets"
         ],
         "clone:wordpress-develop": "git clone git://develop.git.wordpress.org/ source --quiet",
         "clean:source-targets": "( [ -d \"source\" ] && rm -rf \"source\" || true ) && mkdir -p data includes tests",
