@@ -44,6 +44,9 @@ jobs:
           git add ./
           git commit -m "Update from WordPress Develop"
 
+          # Push the new branch to the remote repository
+          git push --set-upstream origin "$branch_name"
+
           # Create a new pull request
           gh pr create --base main --head "$branch_name" --title "Update from WordPress Develop" --body "This PR updates the codebase with the latest changes from the WordPress Develop repository"
 
