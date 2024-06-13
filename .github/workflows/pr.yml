@@ -4,37 +4,45 @@ on:
   push:
     branches:
       - development # Adjust the branch name as needed
+  schedule:
+    - cron: '0 * * * *'
 
 jobs:
   create-pull-request:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
-      with:
-        fetch-depth: 0 # Required to get the complete commit history
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-    - name: Create Pull Request
-      env:
-        GITHUB_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
-      run: |
-        # Set up user information
-        git config --global user.email "34349365+mralaminahamed@users.noreply.github.com"
-        git config --global user.name "Al Amin (Bot)"
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          coverage: none
+          tools: composer
 
-        # Create a new branch
-        branch_name="feature/my-new-feature" # Replace with your desired branch name
-        git checkout -b "$branch_name"
+      - name: Create Pull Request
+        env:
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
+        run: |
+          # Set up user information
+          git config --global user.email "34349365+mralaminahamed@users.noreply.github.com"
+          git config --global user.name "Al Amin (Bot)"
 
-        # Make your desired changes to the code
-        # For example:
-        echo "New feature code" > new-feature.txt
-        git add new-feature.txt
-        git commit -m "Add new feature"
+          # Create a new branch
+          branch_name="feature/my-new-feature" # Replace with your desired branch name
+          git checkout -b "$branch_name"
 
-        # Create a new pull request
-        gh pr create --title "New Feature" --body "This PR adds a new feature" --base main --head "$branch_name"
+          # Update the source code from the official WordPress Develop repository
+          composer update-source
 
-    - name: Check Output
-      run: |
-        echo "Pull Request created successfully!"
+          # Add and commit the changes to the new branch
+          git add ./
+          git commit -m "Add new feature"
+
+          # Create a new pull request
+          gh pr create --title "New Feature" --body "This PR adds a new feature" --base main --head "$branch_name"
+
+      - name: Check Output
+        run: |
+          echo "Pull Request created successfully!"
