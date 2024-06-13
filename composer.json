@@ -10,26 +10,27 @@
     "homepage": "https://github.com/mralaminahamed/phpunit-wordpress-tests-lib",
     "license": "MIT",
     "require": {
-        "php": ">=7.4"
-    },
+		"ext-json": "*",
+		"php": ">=7.2.24"
+	},
     "require-dev": {
-        "phpunit/phpunit": "^11.3@dev"
+        "squizlabs/php_codesniffer": "3.9.0",
+		"wp-coding-standards/wpcs": "~3.1.0",
+		"phpcompatibility/phpcompatibility-wp": "~2.1.3",
+		"yoast/phpunit-polyfills": "^1.1.0"
     },
-    "suggest": {
-        "yoast/phpunit-polyfills": "Set of polyfills for changed PHPUnit functionality to allow for creating PHPUnit cross-version compatible tests."
-    },
+	"config": {
+		"allow-plugins": {
+			"dealerdirect/phpcodesniffer-composer-installer": true
+		}
+	},
     "minimum-stability": "dev",
     "scripts": {
-        "update-source": [
-            "@remove:source",
-            "@mk:targets",
-            "@clone",
-            "@copy:data",
-            "@copy:includes",
-            "@copy:multisite.xml",
-            "@copy:wp-mail-real-test.php",
-            "@copy:config.php"
-        ],
+        "format": "@php ./vendor/squizlabs/php_codesniffer/bin/phpcbf --report=summary,source",
+		"lint": "@php ./vendor/squizlabs/php_codesniffer/bin/phpcs --report=summary,source",
+		"lint:errors": "@lint -n",
+		"test": [ "Composer\\Config::disableProcessTimeout", "@php ./vendor/phpunit/phpunit/phpunit" ],
+        "update-source": [ "Composer\\Config::disableProcessTimeout", "@composer update -W", "@remove:source", "@mk:targets", "@clone", "@copy:data", "@copy:includes", "@copy:multisite.xml", "@copy:phpcs.xml", "@copy:phpunit.xml", "@copy:wp-mail-real-test.php", "@copy:config.php" ],
         "clone": "git clone git://develop.git.wordpress.org/ source --quiet",
         "remove:source": "[ -d \"source\" ] && rm -rf \"source\" || true",
         "mk:targets": "mkdir -p data includes tests",
@@ -37,6 +38,8 @@
         "copy:includes": "cp -r source/tests/phpunit/includes/* includes",
         "copy:tests": "cp -r source/tests/phpunit/tests/* tests",
         "copy:multisite.xml": "cp -r source/tests/phpunit/multisite.xml multisite.xml",
+        "copy:phpcs.xml": "cp -r source/phpcs.xml.dist phpcs.xml.dist",
+        "copy:phpunit.xml": "cp -r source/phpunit.xml.dist phpunit.xml.dist",
         "copy:wp-mail-real-test.php": "cp -r source/tests/phpunit/wp-mail-real-test.php wp-mail-real-test.php",
         "copy:config.php": "cp -r source/wp-tests-config-sample.php wp-tests-config-sample.php",
         "symlink:config": "ln -s /tmp/wordpress-tests-lib/wp-tests-config.php wp-tests-config.php"
