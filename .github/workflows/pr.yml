@@ -1,4 +1,4 @@
-name: Create Pull Request from WordPress Develop Repository
+name: Update from WordPress Develop Repository
 
 on:
   push:
@@ -45,7 +45,7 @@ jobs:
           git commit -m "Update from WordPress Develop"
 
           # Create a new pull request
-          gh pr create --assignee "@mralaminahamed" --base main --head "$branch_name" --title "Update from WordPress Develop" --body "This PR updates the codebase with the latest changes from the WordPress Develop repository"
+          gh pr create --base main --head "$branch_name" --title "Update from WordPress Develop" --body "This PR updates the codebase with the latest changes from the WordPress Develop repository"
 
       - name: Check Output
         run: |
