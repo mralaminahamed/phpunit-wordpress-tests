@@ -137,9 +137,9 @@ https://github.com/wp-cli/scaffold-command/blob/04be3128e743a0d94a1db5b7da942b53
 
 **Complete Working Examples**
 
-- [`wp-phpunit/example-project`](https://github.com/wp-phpunit/example-project)
-- [`wp-phpunit/example-plugin`](https://github.com/wp-phpunit/example-plugin)
+- [`mralaminahamed/phpunit-wordpress-example-project`](https://github.com/mralaminahamed/phpunit-wordpress-example-project)
+- [`mralaminahamed/phpunit-wordpress-example-plugin`](https://github.com/mralaminahamed/phpunit-wordpress-example-plugin)
 
 **PHPUnit WordPress in the Wild**
 
-- [Packages that require PHPUnit WordPress](https://packagist.org/packages/wp-phpunit/wp-phpunit/dependents)# PHPUnit WordPress Documentation
+- [Packages that require PHPUnit WordPress](https://packagist.org/packages/mralaminahamed/phpunit-wordpress-tests/dependents)# PHPUnit WordPress Documentation
