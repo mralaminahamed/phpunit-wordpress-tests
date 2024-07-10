@@ -45,6 +45,8 @@ jobs:
 
       - name: Normalize line endings
         run: |
+          sudo apt-get update
+          sudo apt-get install -y dos2unix
           find . -type f -not -path './.git/*' -print0 | xargs -0 dos2unix
 
       - name: Check for changes
